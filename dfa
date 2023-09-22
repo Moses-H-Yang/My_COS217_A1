@@ -1,0 +1,44 @@
+========================================================================
+Assignment 1 DFA
+Author: Moses Yang
+========================================================================
+
+NORMAL (reject) <-- the start state
+     /: FORWARD_SLASH
+     \': CHAR_LIT
+     \": STRING_LIT
+     other: NORMAL
+
+FORWARD_SLASH (reject)
+     *: IN_COMMENT
+     /: FORWARD_SLASH
+     \": STRING_LIT
+     \': CHAR_LIT
+     other: NORMAL
+
+IN_COMMENT (accept)
+     *: ASTERISK
+     \n: IN_COMMENT
+     other: IN_COMMENT
+
+ASTERISK (reject)
+     /: NORMAL
+     *: ASTERISK
+     \n: IN_COMMENT
+     other: IN_COMMENT
+
+CHAR_LIT (reject)
+     \': NORMAL
+     \\: ESCAPE_CHAR
+     other CHAR_LIT
+
+STRING_LIT (reject)
+     \": NORMAL
+     \\: ESCAPE_STRING
+     other: STRING_LIT
+
+ESCAPE_CHAR (reject)
+     other: CHAR_LIT
+
+ESCAPE_STRING (reject)
+     other: STRING_LIT
